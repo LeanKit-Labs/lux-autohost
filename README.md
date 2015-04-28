@@ -40,9 +40,9 @@ define([
 });
 ```
 
-### Configuring the whitelist/blacklist
+### Configuring include/exclude
 
-By default, lux-autohost will wire up metrics on *every* action. You may have actions that you don't care about monitoring (for example: an action that fires any time a text input updates as a user types). You can choose to add actions to the blacklist, OR you can switch lux-autohost into whitelist mode, and only the actions specified will be monitored.
+By default, lux-autohost will wire up metrics on *every* action. You may have actions that you don't care about monitoring (for example: an action that fires any time a text input updates as a user types). You can choose to add actions to an "exclude" list, OR you can switch lux-autohost into "include" mode, and only the actions specified will be monitored.
 
 ```javascript
 define([
@@ -50,7 +50,7 @@ define([
 ], function( luxah ) {
 	luxah.config({
 		filter: {
-			whitelist: false, // default value is false, we blacklist by default
+			include: false, // default value is false - we exclude by default
 			actions: [ "someAction", "anotherAction" ]
 		},
 		// interval configuration example from above snippet
