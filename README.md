@@ -143,7 +143,7 @@ define( [
 
 ### How Logging and Metrics Make it to autohost
 
-The underlying batch manager in lux-autohost is an Action Listener for actions matching the method names provided by the logging and metrics Action Creator APIs (in other words, it listens for `timer`, `meter`, `error`, `warn`, `info` and `debug` action messages). Logging and metrics action messages are queued until the interval threshold has been reached, at which point lux-autohost will publish a `sendLogBatch` or `sendMetricsBatch` action message. Your API wrapper will need to handle `loggingBatch` and/or `metricsBatch` actions, transmitting them to your autohost endpoints however you prefer (we use [halon](https://github.com/LeanKit-Labs/halon) to do this). For example, our API wrapper might look like this:
+The underlying batch manager in lux-autohost is an Action Listener for actions matching the method names provided by the logging and metrics Action Creator APIs (in other words, it listens for `timer`, `meter`, `error`, `warn`, `info` and `debug` action messages). Logging and metrics action messages are queued until the interval threshold has been reached, at which point lux-autohost will publish a `sendLogBatch` or `sendMetricsBatch` action message. Your API wrapper will need to handle `sendLogBatch` and/or `sendMetricsBatch` actions, transmitting them to your autohost endpoints however you prefer (we use [halon](https://github.com/LeanKit-Labs/halon) to do this). For example, our API wrapper might look like this:
 
 ```javascript
 define( [
