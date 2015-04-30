@@ -4,7 +4,8 @@
 	// Project Specific
 	"excludeFiles": [
 		"node_modules/**",
-		"coverage/**"
+		"coverage/**",
+		"**/*es6.js"
 	],
 
 	// Normal jscsrc
