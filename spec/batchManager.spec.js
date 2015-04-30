@@ -22,6 +22,9 @@ describe( "batchManager.js", function() {
 			creator = lux.actionCreator( { getActionGroup: [ "logging" ] } );
 			global.lah.loggingClient.queue = [];
 		} );
+		afterEach( function() {
+			listener.luxCleanup();
+		} );
 		it( "should queue the entry if the threshold hasn't been reached", function() {
 			sendLogMessage();
 			listener.handlers.sendLogBatch.should.not.have.been.called;
@@ -70,6 +73,10 @@ describe( "batchManager.js", function() {
 			creator = lux.actionCreator( { getActionGroup: [ "metrics" ] } );
 			global.lah.metricsClient.queue = [];
 		} );
+		afterEach( function() {
+			listener.luxCleanup();
+		} );
+
 		it( "should queue the entry if the threshold hasn't been reached", function() {
 			sendMetricsMessages();
 			listener.handlers.sendMetricsBatch.should.not.have.been.called;

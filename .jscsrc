@@ -5,7 +5,8 @@
 	"excludeFiles": [
 		"node_modules/**",
 		"coverage/**",
-		"**/*es6.js"
+		"**/*es6.js",
+		"lib/*.min.js"
 	],
 
 	// Normal jscsrc
