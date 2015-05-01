@@ -30,7 +30,7 @@ gulp.task( "build:es6", function() {
 		.pipe( gulp.dest( "lib/" ) );
 } );
 
-gulp.task( "build:es5", function() {
+function buildEs5() {
 	return gulp.src( "src/lux-autohost.js" )
 		.pipe( imports() )
 		.pipe( hintNot() )
@@ -45,7 +45,21 @@ gulp.task( "build:es5", function() {
 			pkg: pkg
 		} ) )
 		.pipe( sourcemaps.write() )
-		.pipe( rename( "lux-autohost.js" ) )
+		.pipe( rename( "lux-autohost.js" ) );
+}
+
+gulp.task( "build:es5:quick", function() {
+	// build for testing, format to prevent source control showing changes
+	return buildEs5()
+		.pipe( jscs( {
+			configPath: ".jscsrc",
+			fix: true
+		} ) )
+		.pipe( gulp.dest( "lib/" ) );
+} );
+
+gulp.task( "build:es5", function() {
+	return buildEs5()
 		.pipe( gulp.dest( "lib/" ) )
 		.pipe( uglify( {
 			compress: {
@@ -62,7 +76,7 @@ gulp.task( "build:es5", function() {
 gulp.task( "default", [ "format" ] );
 
 var mocha = require( "gulp-spawn-mocha" );
-gulp.task( "test", function() {
+gulp.task( "test", [ "build:es5:quick" ], function() {
 	return gulp.src( [ "spec/**/*.spec.js" ], { read: false } )
 		.pipe( mocha( {
 			require: [ "spec/helpers/node-setup.js" ],
@@ -80,7 +94,7 @@ gulp.task( "watch", function() {
 } );
 
 gulp.task( "format", [ "build:es6", "build:es5" ], function() {
-	return gulp.src( [ "**/*.js", "!lib/*.min.js", "!*es6.js" ] )
+	return gulp.src( [ "**/*.js", "!node_modules/**" ] )
 		.pipe( jscs( {
 			configPath: ".jscsrc",
 			fix: true

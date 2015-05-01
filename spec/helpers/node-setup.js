@@ -6,7 +6,7 @@ require( "babel/polyfill" );
 var chai = require( "chai" );
 chai.use( require( "sinon-chai" ) );
 global.should = chai.should();
-global.proxyquire = require( "proxyquire" ).noPreserveCache();
+global.proxyquire = require( "proxyquire" ).noPreserveCache().noCallThru();
 
 global.postal = require( "postal" );
 global.machina = require( "machina" );
@@ -21,7 +21,15 @@ require( "babel/register" )( {
 } );
 
 global.initLuxAh = function() {
-	global.lux = global.proxyquire( "lux.js", {}	);
+	if ( global.lah ) {
+		global.lah.batchListener.luxCleanup();
+	}
+
+	if ( global.lux ) {
+		global.lux.dispatcher.dispose();
+	}
+
+	global.lux = global.proxyquire( "lux.js", {} );
 	global.lah = global.proxyquire( "../../lib/lux-autohost.js", {
 		"lux.js": global.lux
 	} );
