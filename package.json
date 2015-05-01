@@ -8,11 +8,19 @@
     "type": "git",
     "url": "git://github.com/LeanKit-Labs/lux-autohost.git"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "contributors": [
     {
       "name": "Jim Cowart",
       "email": "jim@ifandelse.com",
       "url": "http://ifandelse.com"
+    },
+    {
+      "name": "Ryan Niemeyer",
+      "email": "ryan@knockmeout.net",
+      "url": "http://knockmeout.net"
     }
   ],
   "main": "./lib/lux-autohost.js",
