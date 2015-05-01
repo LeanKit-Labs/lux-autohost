@@ -39,33 +39,74 @@ describe( "loggingActionCreatorApi", function() {
 
 	logLevels.forEach( function( level, index ) {
 		describe( "Calling the " + level + " action", function() {
-			before( function() {
+			var existingLocation, existingNavigator;
+			var testLocation = "http://localhost/test?queryString=1";
+			var testUserAgent = "testUserAgent";
+			var now;
+
+			beforeEach( function() {
 				if ( console[level] ) {
 					sinon.stub( console, level );
 				}
+
+				existingLocation = window.location;
+				existingNavigator = window.navigator;
+
+				window.location = {
+					href: testLocation
+				};
+
+				window.navigator = {
+					userAgent: testUserAgent
+				};
+
+				now = moment.utc();
 			} );
+
+			function matcher( data ) {
+				return moment( data ).diff( now, "ms" ) < 500;
+			}
 
 			it( "should publish the action properly", function() {
 				creator[ level ]( data );
 
-				var now = moment.utc();
-
-				function matcher( data ) {
-					return moment( data ).diff( now, "ms" ) < 500;
-				}
-
 				listener.handlers.sendLogEntry.should.be.calledOnce.and.calledWith( sinon.match( {
-					msg: data,
+					msg: {
+						data: data,
+						location: testLocation,
+						userAgent: testUserAgent
+					},
 					type: level,
 					level: index + 1,
 					timestamp: sinon.match( matcher, "not within 500 ms" )
 				} ) );
 			} );
 
-			after( function() {
+			describe( "when browser information is not available", function() {
+				beforeEach( function() {
+					window.location = null;
+					window.navigator = null;
+				} );
+
+				it( "should include just the original data", function() {
+					creator[ level ]( data );
+
+					listener.handlers.sendLogEntry.should.be.calledOnce.and.calledWith( sinon.match( {
+						msg: data,
+						type: level,
+						level: index + 1,
+						timestamp: sinon.match( matcher, "not within 500 ms" )
+					} ) );
+				} );
+			} );
+
+			afterEach( function() {
 				if ( console[level] ) {
 					console[ level ].restore();
 				}
+
+				window.location = existingLocation;
+				window.navigator = existingNavigator;
 			} );
 		} );
 	} );
