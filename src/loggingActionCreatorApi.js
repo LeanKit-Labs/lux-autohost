@@ -3,8 +3,18 @@
 var logLevels = [ "error", "warn", "info", "debug" ];
 
 function formatLogEntry( type, data ) {
+	var msg = data;
+
+	if ( window && window.location && window.navigator ) {
+		msg = {
+			data: data,
+			location: window.location.href,
+			userAgent: window.navigator.userAgent
+		};
+	}
+
 	return {
-		msg: data,
+		msg: msg,
 		timestamp: moment.utc().toISOString(),
 		type: type,
 		level: logLevels.indexOf( type ) + 1
