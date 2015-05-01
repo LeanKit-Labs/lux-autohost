@@ -1,6 +1,6 @@
 {
   "name": "lux-autohost",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/LeanKit-Labs/lux-autohost",
   "description": "Action Creator API for submitting logging & metrics to autohost from lux.js apps.",
   "author": "Jim Cowart",
