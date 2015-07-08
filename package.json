@@ -1,6 +1,6 @@
 {
   "name": "lux-autohost",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "homepage": "https://github.com/LeanKit-Labs/lux-autohost",
   "description": "Action Creator API for submitting logging & metrics to autohost from lux.js apps.",
   "author": "Jim Cowart",
@@ -43,7 +43,7 @@
     "show-coverage": "open ./coverage/lcov-report/index.html"
   },
   "peerDependencies": {
-    "babel": "^4.6.6"
+    "babel": ">=5.x"
   },
   "dependencies": {
     "lodash": "3.x",
@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "amd-inject-loader": "~0.2.1",
-    "babel": "^4.6.6",
+    "babel": ">=5.x",
     "babel-loader": "~5.0.0",
     "chai": "^2.0.0",
     "gulp": "^3.8.8",
