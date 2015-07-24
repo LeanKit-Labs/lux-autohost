@@ -71,6 +71,7 @@ describe( "loggingActionCreatorApi", function() {
 				creator[ level ]( data );
 
 				listener.handlers.sendLogEntry.should.be.calledOnce.and.calledWith( sinon.match( {
+					namespace: "lux",
 					msg: {
 						data: data,
 						location: testLocation,
@@ -92,6 +93,7 @@ describe( "loggingActionCreatorApi", function() {
 					creator[ level ]( data );
 
 					listener.handlers.sendLogEntry.should.be.calledOnce.and.calledWith( sinon.match( {
+						namespace: "lux",
 						msg: data,
 						type: level,
 						level: index + 1,
