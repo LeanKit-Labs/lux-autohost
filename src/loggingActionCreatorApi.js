@@ -4,6 +4,7 @@ var logLevels = [ "error", "warn", "info", "debug" ];
 
 function formatLogEntry( type, data ) {
 	var msg = data;
+	var ns = lux.getLogNamespace ? lux.getLogNamespace( type, data ) : "lux";
 
 	if ( window && window.location && window.navigator ) {
 		msg = {
@@ -14,6 +15,7 @@ function formatLogEntry( type, data ) {
 	}
 
 	return {
+		namespace: ns,
 		msg: msg,
 		timestamp: moment.utc().toISOString(),
 		type: type,
