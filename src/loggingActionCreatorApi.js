@@ -6,13 +6,11 @@ function formatLogEntry( type, data ) {
 	var msg = data;
 	var ns = lux.getLogNamespace ? lux.getLogNamespace( type, data ) : "lux";
 
-	if ( window && window.location && window.navigator ) {
-		msg = {
-			data: data,
-			location: window.location.href,
-			userAgent: window.navigator.userAgent
-		};
-	}
+	msg = {
+		data: data,
+		location: window.location.href,
+		userAgent: window.navigator.userAgent
+	};
 
 	return {
 		namespace: ns,
@@ -24,7 +22,7 @@ function formatLogEntry( type, data ) {
 }
 
 function logIt( type, data ) {
-	lux.publishAction( "sendLogEntry", formatLogEntry( type, data ) );
+	lux.dispatch( "sendLogEntry", formatLogEntry( type, data ) );
 }
 
 var loggingApi = _.reduce(
@@ -39,5 +37,3 @@ var loggingApi = _.reduce(
 );
 
 lux.customActionCreator( loggingApi );
-
-lux.addToActionGroup( "logging", logLevels );

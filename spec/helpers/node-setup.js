@@ -1,8 +1,10 @@
-var jsdom = require( "jsdom" ).jsdom;
-global.document = jsdom( "<html><body></body></html>" );
-global.window = document.parentWindow;
+var jsdom = require( "jsdom" );
+global.document = jsdom.jsdom( "<html><body></body></html>" );
+global.window = document.defaultView;
+global.BROWSER = false;
+jsdom.changeURL( global.window, "http://localhost/test?queryString=1" );
 
-require( "babel/polyfill" );
+require( "babel-polyfill" );
 var chai = require( "chai" );
 chai.use( require( "sinon-chai" ) );
 global.should = chai.should();
@@ -16,7 +18,7 @@ global.moment = require( "moment" );
 global.lux = undefined;
 global.lah = undefined;
 
-require( "babel/register" )( {
+require( "babel-register" )( {
 	only: /spec/
 } );
 

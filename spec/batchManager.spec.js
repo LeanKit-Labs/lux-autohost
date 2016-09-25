@@ -19,7 +19,7 @@ describe( "batchManager.js", function() {
 					sendLogEntry: sinon.stub()
 				}
 			} );
-			creator = lux.actionCreator( { getActionGroup: [ "logging" ] } );
+			creator = lux.actionCreator( { getActions: [ "error", "warn", "info", "debug" ] } );
 			global.lah.loggingClient.queue = [];
 		} );
 		afterEach( function() {
@@ -70,7 +70,7 @@ describe( "batchManager.js", function() {
 					sendMetricsEntry: sinon.stub()
 				}
 			} );
-			creator = lux.actionCreator( { getActionGroup: [ "metrics" ] } );
+			creator = lux.actionCreator( { getActions: [ "meter", "timer" ] } );
 			global.lah.metricsClient.queue = [];
 		} );
 		afterEach( function() {

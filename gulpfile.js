@@ -37,10 +37,11 @@ function buildEs5() {
 		.pipe( hintNot() )
 		.pipe( sourcemaps.init() )
 		.pipe( babel( {
-			auxiliaryComment: "istanbul ignore next",
 			compact: false,
-			blacklist: [ "strict" ],
-			stage: 0
+			presets: [
+				"es2015-without-strict",
+				"stage-0"
+			]
 		} ) )
 		.pipe( header( banner, {
 			pkg: pkg

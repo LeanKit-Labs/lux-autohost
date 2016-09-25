@@ -1,6 +1,4 @@
 {
-	"esnext": true,
-
 	// Project Specific
 	"excludeFiles": [
 		"node_modules/**",
