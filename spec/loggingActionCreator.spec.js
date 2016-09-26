@@ -13,7 +13,7 @@ describe( "loggingActionCreatorApi", function() {
 		} );
 
 		creator = lux.actionCreator( {
-			getActionGroup: [ "logging" ]
+			getActions: [ "error", "warn", "info", "debug" ]
 		} );
 	} );
 
@@ -33,15 +33,10 @@ describe( "loggingActionCreatorApi", function() {
 		Object.keys( lux.actions ).should.contain( "error", "warn", "info", "debug" );
 	} );
 
-	it( "should create the 'logging' action group in lux", function() {
-		Object.keys( lux.getActionGroup( "logging" ) ).should.contain( "error", "warn", "info", "debug" );
-	} );
-
 	logLevels.forEach( function( level, index ) {
 		describe( "Calling the " + level + " action", function() {
 			var existingLocation, existingNavigator;
 			var testLocation = "http://localhost/test?queryString=1";
-			var testUserAgent = "testUserAgent";
 			var now;
 
 			beforeEach( function() {
@@ -54,10 +49,6 @@ describe( "loggingActionCreatorApi", function() {
 
 				window.location = {
 					href: testLocation
-				};
-
-				window.navigator = {
-					userAgent: testUserAgent
 				};
 
 				now = moment.utc();
@@ -75,31 +66,12 @@ describe( "loggingActionCreatorApi", function() {
 					msg: {
 						data: data,
 						location: testLocation,
-						userAgent: testUserAgent
+						userAgent: window.navigator.userAgent
 					},
 					type: level,
 					level: index + 1,
 					timestamp: sinon.match( matcher, "not within 500 ms" )
 				} ) );
-			} );
-
-			describe( "when browser information is not available", function() {
-				beforeEach( function() {
-					window.location = null;
-					window.navigator = null;
-				} );
-
-				it( "should include just the original data", function() {
-					creator[ level ]( data );
-
-					listener.handlers.sendLogEntry.should.be.calledOnce.and.calledWith( sinon.match( {
-						namespace: "lux",
-						msg: data,
-						type: level,
-						level: index + 1,
-						timestamp: sinon.match( matcher, "not within 500 ms" )
-					} ) );
-				} );
 			} );
 
 			afterEach( function() {

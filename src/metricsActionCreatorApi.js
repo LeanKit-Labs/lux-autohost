@@ -14,13 +14,11 @@ function formatMetricsEntry( type, key, value, unit, data ) {
 
 var metricsApi = {
 	meter: function( key, value, unit, customData ) {
-		lux.publishAction( "sendMetricsEntry", formatMetricsEntry( "meter", key, value, unit, customData ) );
+		lux.dispatch( "sendMetricsEntry", formatMetricsEntry( "meter", key, value, unit, customData ) );
 	},
 	timer: function( key, value, customData ) {
-		lux.publishAction( "sendMetricsEntry", formatMetricsEntry( "timer", key, value, "ms", customData ) );
+		lux.dispatch( "sendMetricsEntry", formatMetricsEntry( "timer", key, value, "ms", customData ) );
 	}
 };
 
 lux.customActionCreator( metricsApi );
-
-lux.addToActionGroup( "metrics", [ "meter", "timer" ] );

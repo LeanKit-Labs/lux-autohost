@@ -9,7 +9,7 @@ describe( "metricsActionCreatorApi.js", function() {
 		} );
 
 		creator = lux.actionCreator( {
-			getActionGroup: [ "metrics" ]
+			getActions: [ "meter", "timer" ]
 		} );
 	} );
 
@@ -25,10 +25,6 @@ describe( "metricsActionCreatorApi.js", function() {
 
 	it( "should add meter & timer action creator APIs to lux", function() {
 		Object.keys( lux.actions ).should.contain( "meter", "timer" );
-	} );
-
-	it( "should create the 'metrics' action group in lux", function() {
-		Object.keys( lux.getActionGroup( "metrics" ) ).should.contain( "meter", "timer" );
 	} );
 
 	describe( "when capturing a meter", function() {

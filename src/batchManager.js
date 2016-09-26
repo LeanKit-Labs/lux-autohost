@@ -37,7 +37,7 @@ var batchManager = new machina.BehavioralFsm( {
 				if ( client.queue.length ) {
 					var queue = client.queue;
 					client.queue = [];
-					lux.publishAction( client.action, queue );
+					lux.dispatch( client.action, queue );
 				}
 				this.transition( client, "queueing" );
 			}
